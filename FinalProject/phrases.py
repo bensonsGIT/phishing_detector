@@ -1,0 +1,22 @@
+PHRASES = {
+    "verify your account": 30,
+    "action required": 30,
+    "dear customer": 30,
+    "reciept": 30,
+    "urgetn action required": 30,
+    "confirm your password": 30,
+    "invoice from": 30,
+    "account suspended": 30,
+    "unusual activity": 20,
+    "click here": 20,
+    "act now": 20,
+    "urgent": 20,
+    "immediately": 10,
+    "update your payment": 20,
+    "you have won": 20,
+    "free": 10,
+    "re: invoice": 10,
+    "message from": 10,
+    "verification requried": 10,
+    "attention required": 10
+}
