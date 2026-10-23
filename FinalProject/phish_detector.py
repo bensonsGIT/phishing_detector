@@ -1,12 +1,12 @@
 import re
 import sys
-import FinalProject.phrases as phrases
+import phrases as phrases
 from email import policy
 from email.parser import BytesParser
 from email.utils import parseaddr
 from urllib.parse import urlparse
 
-from bs4 import BeautifulSoup  # pip install beautifulsoup4
+from bs4 import BeautifulSoup
 
 # --- 1. Weighted phrase list (replace/extend by loading your dataset) -------
 # Higher weight = stronger phishing signal.
@@ -15,8 +15,6 @@ PHRASES = phrases.PHRASES
 THRESHOLD_PHISHING = 100
 THRESHOLD_SUSPICIOUS = 30
 
-
-# --- 2. Parsing --------------------------------------------------------------
 def parse_eml(path):
     with open(path, "rb") as f:
         msg = BytesParser(policy=policy.default).parse(f)
@@ -40,7 +38,6 @@ def parse_pasted(raw_text):
     return {"from": "", "reply_to": "", "subject": "", "text": raw_text, "html": ""}
 
 
-# --- 3. Checks ---------------------------------------------------------------
 def domain_of(address):
     addr = parseaddr(address)[1]
     return addr.split("@")[-1].lower() if "@" in addr else ""
@@ -70,7 +67,6 @@ def link_mismatches(html):
     return mismatches
 
 
-# --- 4. Scoring --------------------------------------------------------------
 def analyze(email_data):
     score = 0.0
     reasons = []
