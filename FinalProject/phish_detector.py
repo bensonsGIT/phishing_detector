@@ -1,3 +1,5 @@
+# Data from: https://github.com/rf-peixoto/phishing_pot
+
 import re
 import sys
 import phrases as phrases
@@ -5,15 +7,18 @@ from email import policy
 from email.parser import BytesParser
 from email.utils import parseaddr
 from urllib.parse import urlparse
+import pandas as pd
 
 from bs4 import BeautifulSoup
 
-# --- 1. Weighted phrase list (replace/extend by loading your dataset) -------
-# Higher weight = stronger phishing signal.
-PHRASES = phrases.PHRASES
 
+"""df = pd.read_csv("phrases.csv")
+PHRASES = dict(zip(df.iloc[:, 0].str.lower().str.strip(),
+                   df.iloc[:, 1].astype(float)))
+"""
+PHRASES = phrases.PHRASES
 THRESHOLD_PHISHING = 100
-THRESHOLD_SUSPICIOUS = 30
+THRESHOLD_SUSPICIOUS = 10
 
 def parse_eml(path):
     with open(path, "rb") as f:
@@ -22,7 +27,6 @@ def parse_eml(path):
 
 
 def extract_parts(msg):
-    """Return dict with sender, reply_to, subject, text, html."""
     text_part = msg.get_body(preferencelist=("plain",))
     html_part = msg.get_body(preferencelist=("html",))
     return {
@@ -50,7 +54,6 @@ def phrase_score(body):
 
 
 def link_mismatches(html):
-    """Links where the visible text looks like a URL but points elsewhere."""
     mismatches = []
     if not html:
         return mismatches
@@ -81,12 +84,12 @@ def analyze(email_data):
 
     from_dom, reply_dom = domain_of(email_data["from"]), domain_of(email_data["reply_to"])
     if from_dom and reply_dom and from_dom != reply_dom:
-        score += 3
+        score += 25
         reasons.append(f"Sender domain ({from_dom}) differs from Reply-To ({reply_dom})")
 
     mism = link_mismatches(email_data["html"])
     if mism:
-        score += 4
+        score += 15
         reasons.append(f"{len(mism)} link(s) where displayed URL != real URL")
 
     if score >= THRESHOLD_PHISHING:
