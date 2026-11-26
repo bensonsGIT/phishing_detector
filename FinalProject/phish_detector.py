@@ -1,32 +1,25 @@
 # Data from: https://github.com/rf-peixoto/phishing_pot
-
 import re
 import sys
 import phrases as phrases
 from email import policy
 from email.parser import BytesParser
 from email.utils import parseaddr
+from email.message import EmailMessage
 from urllib.parse import urlparse
-import pandas as pd
-
 from bs4 import BeautifulSoup
 
-
-"""df = pd.read_csv("phrases.csv")
-PHRASES = dict(zip(df.iloc[:, 0].str.lower().str.strip(),
-                   df.iloc[:, 1].astype(float)))
-"""
 PHRASES = phrases.PHRASES
-THRESHOLD_PHISHING = 100
-THRESHOLD_SUSPICIOUS = 10
+THRESHOLD_PHISHING = 50
+THRESHOLD_SUSPICIOUS = 20
 
-def parse_eml(path):
+def parse_eml(path: str) -> dict[str, str]:
     with open(path, "rb") as f:
         msg = BytesParser(policy=policy.default).parse(f)
     return extract_parts(msg)
 
 
-def extract_parts(msg):
+def extract_parts(msg: EmailMessage) -> dict[str, str]:
     text_part = msg.get_body(preferencelist=("plain",))
     html_part = msg.get_body(preferencelist=("html",))
     return {
@@ -34,26 +27,27 @@ def extract_parts(msg):
         "reply_to": msg.get("Reply-To", ""),
         "subject": msg.get("Subject", ""),
         "text": text_part.get_content() if text_part else "",
+        "auth": " ".join(msg.get_all("Authentication-Results", [])).lower(),
         "html": html_part.get_content() if html_part else "",
     }
 
 
-def parse_pasted(raw_text):
-    return {"from": "", "reply_to": "", "subject": "", "text": raw_text, "html": ""}
+def parse_pasted(raw_text: str) -> dict[str, str]:
+    return {"from": "", "reply_to": "", "subject": "", "auth": "", "text": raw_text, "html": ""}
 
 
-def domain_of(address):
+def domain_of(address: str) -> str:
     addr = parseaddr(address)[1]
     return addr.split("@")[-1].lower() if "@" in addr else ""
 
 
-def phrase_score(body):
+def phrase_score(body: str) -> tuple[int, list[str]]:
     body = body.lower()
     hits = [(p, w) for p, w in PHRASES.items() if p in body]
     return sum(w for _, w in hits), [p for p, _ in hits]
 
 
-def link_mismatches(html):
+def link_mismatches(html: str) -> list[tuple[str, str]]:
     mismatches = []
     if not html:
         return mismatches
@@ -70,7 +64,7 @@ def link_mismatches(html):
     return mismatches
 
 
-def analyze(email_data):
+def analyze(email_data: dict[str, str]) -> tuple[str, float, list[str]]:
     score = 0.0
     reasons = []
 
@@ -86,6 +80,14 @@ def analyze(email_data):
     if from_dom and reply_dom and from_dom != reply_dom:
         score += 25
         reasons.append(f"Sender domain ({from_dom}) differs from Reply-To ({reply_dom})")
+
+    for check in ("spf", "dkim", "dmarc"):
+        if f"{check}=fail" in email_data["auth"]:
+            score += 30
+            reasons.append(f"{check.upper()} check failed")
+        elif f"{check}=none" in email_data["auth"] or f"{check}=permerror" in email_data["auth"]:
+            score += 10
+            reasons.append(f"No valid {check.upper()} record")
 
     mism = link_mismatches(email_data["html"])
     if mism:

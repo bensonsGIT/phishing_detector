@@ -1,0 +1,54 @@
+Delivered-To: ricahrdsonjoshua@gmail.com
+Received: by 2002:a05:6919:c881:b0:4c7:6f4e:88c with SMTP id wp1csp4325838ysb; Sun, 1 Nov 2026 14:21:42 -0800 (PST)
+X-Forwarded-Encrypted: i=2; AKwUvBw/UkeKLPQyQUlQA/GlQOnst1gsIHE3TBj+QXAzgpPN5eUup6id5KymorbadrGp3xufJyTNwZo6fXOBMdHFeWL6@gmail.com
+X-Received: by 2002:a05:690e:4853:b0:679:a190:cf38 with SMTP id 956f58d0204a3-67ba5044564mr5089803d50.90.1793571702014; Sun, 01 Nov 2026 14:21:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1793571702; cv=none; d=google.com; s=arc-20260327; b=V2iyNzv+EXJRqYki92bTd89iMBeLOleOwbh4bRXFjp0x3NP11W4gd0+KMtEUm35s8C /24hJlUgLwCDZhic0cUIiQQoq8xafxGpNx8qbSAtgwDYg2X6js/rIFsqTMlxHxht+dL9 cF1HoiIU7KYHzNJDa9ALE5ORIgad0Vf+A3HDSFsCvmm7I/H4bXxZ0+dYncF6dVzm/Bxg 2QRId9ZLk9I4j+HB+pwPspIuQ5g/vwh9vixxiV383lz376NwHX8qIV48jZBa+kN510Bt iPb/zSNPMOHRNxH40T0C+oiDIY6KMpvHWXgtoWBApBP+mkHoGR5LrhV9hpDfYBV3994v PPaw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327; h=content-transfer-encoding:message-id:mail-reply-to:reply-to:to:from :date:mime-version:dkim-signature:dkim-filter; bh=EuwOU9dEcyZz/8Zc3FEUyDljqq97mLeDRRv0XoDZOYs=; fh=Pr2plYkJn0ovdHybgHvE53243CPsqSX0NRPDPDnAMwQ=; b=KzNnWvNdTdF8ke7i2jFyqr+u8tKlWcWJPP5ciy9TRpNr5O0AV/pcSz2SmOub+57SNQ UHYjMeyoJgyxZZCbaD9PEWeyuDgNEsoPtR1MFV/xDwODRB1GCy1faryUuAHZukyUDWyh Czm2QAv4H4KDILx+SXvgm+6lbFzAaHibnz3cgyF5EdF3kXzGdXyICyud1y14EZQyVRpN izca2EkqdmWzHrH7pB6+v1z7UWYlLmPVd9XvIzDYAqJw2Hrnr7SpR86DWWTxrrZSrgAG FlsqXHDvP25NwzBqmkvUtSuUb67MTKD+7lYDjItyrSffbTRs3ggpo01voon2aTCGAMXG GQug==; dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com; dkim=pass header.i=@ufabc.edu.br header.s=smtp-1 header.b=CFl2fzye; spf=pass (google.com: domain of talita.gantus@ufabc.edu.br designates 177.104.50.17 as permitted sender) smtp.mailfrom=talita.gantus@ufabc.edu.br; dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=ufabc.edu.br
+Return-Path: <talita.gantus@ufabc.edu.br>
+Received: from smtp-1.ufabc.edu.br (smtp-1.ufabc.edu.br. [177.104.50.17]) by mx.google.com with ESMTPS id 956f58d0204a3-67baf378c95si5124136d50.52.2026.11.01.14.21.41 (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256); Sun, 01 Nov 2026 14:21:42 -0800 (PST)
+Received-SPF: pass (google.com: domain of talita.gantus@ufabc.edu.br designates 177.104.50.17 as permitted sender) client-ip=177.104.50.17;
+Authentication-Results: mx.google.com; dkim=pass header.i=@ufabc.edu.br header.s=smtp-1 header.b=CFl2fzye; spf=pass (google.com: domain of talita.gantus@ufabc.edu.br designates 177.104.50.17 as permitted sender) smtp.mailfrom=talita.gantus@ufabc.edu.br; dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=ufabc.edu.br
+Received: from webmail.ufabc.edu.br (webmail.ufabc.edu.br [177.104.50.202]) by smtp-1.ufabc.edu.br (Postfix) with ESMTPSA id A7C6C5C14468; Sun,
+  1 Nov 2026 19:18:35 -0300 (-03)
+DKIM-Filter: OpenDKIM Filter v2.11.0 smtp-1.ufabc.edu.br A7C6C5C14468
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ufabc.edu.br; s=smtp-1; t=1793571517; bh=EuwOU9dEcyZz/8Zc3FEUyDljqq97mLeDRRv0XoDZOYs=; h=Date:From:To:Reply-To; b=CFl2fzyejUgch/uQX8n91yjbw9k3Zq9hkfxkTqh52qJDmoXpW1WwpmdV0CbPK5bWh Moj/fKTikUrABUHPzOkXLkiZUBNyCd6Nt/02O8TQUn2pYzPOBKW3KC+zYg4tQtH5mh xV4R+F8CKjItaq51/Tu/8b/S3Pdc2/HiZTuyGK3NA06BgcdE/SjvT0pKxpUp+qlw5h jhpmXXx1PxI4Gxnwb7RzAkTm+Rdgf+kwAHe7PjpSoklEkjDt2iZ5Y6WhVC8EW6xuA5 Yu4ET4uqNXcGNmsVq1dhkDbbi6x/XotAmE8nHMCJcyLYP2MXmstX4moMYbE50zFLFN ZYrTNlyGqLyLQ==
+MIME-Version: 1.0
+Date: Sun, 01 Nov 2026 14:18:35 -0800
+From: "Ms. Mackenzie Scott" <talita.gantus@ufabc.edu.br>
+To: undisclosed-recipients:;
+Reply-To: msmackenzietscott@gmail.com
+Mail-Reply-To: msmackenzietscott@gmail.com
+Message-ID: <398723eb8ed89e4bda4d574d67e14de2@ufabc.edu.br>
+X-Sender: talita.gantus@ufabc.edu.br
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7bit
+
+
+
+-- 
+I hope this email finds you well. I am delighted to introduce myself as 
+Mackenzie Scott Tuttle, an American novelist and philanthropist. You may 
+know me as the former wife of Jeff Bezos, the founder of Amazon. It is 
+my strong belief that we should give back to society while we are 
+capable, and I am dedicated to the philosophy of "giving while living."
+
+     I am excited to share with you that I have decided to provide a 
+substantial donation of $1,500,000.00 USD (One Million Five Hundred 
+Thousand United States Dollars) to randomly selected individuals around 
+the globe. Your email address has been chosen during an online search as 
+one of the fortunate recipients of this donation.
+
+     I kindly request you to confirm the validity of your email address 
+by reaching out to me at your earliest convenience. Please contact me 
+via my private email address (msmackenzietscott@gmail.com).
+
+     Click the link to know more about me
+     https://en.wikipedia.org/wiki/MacKenzie_Scott
+
+     Your prompt response will be greatly appreciated.
+
+I look forward to hearing from you soon.
+
+Sincerely,
+Ms. Mackenzie Scott.

@@ -3,7 +3,7 @@ PHRASES = {
     "action required": 30,
     "dear customer": 30,
     "reciept": 30,
-    "urgetn action required": 30,
+    "urgent action required": 30,
     "confirm your password": 30,
     "invoice from": 30,
     "account suspended": 30,
@@ -18,5 +18,5 @@ PHRASES = {
     "re: invoice": 10,
     "message from": 10,
     "verification requried": 10,
-    "attention required": 10
+    "attention required": 10,
 }

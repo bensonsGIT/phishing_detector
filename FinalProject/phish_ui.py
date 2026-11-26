@@ -15,9 +15,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Phishing Email Detector")
-        self.geometry("800x800")
-        self.configure(bg="black")
-        self
+        self.geometry("700x600")
 
         tk.Label(self, text="Paste an email (raw source or just the body), or open an .eml file:").pack(
             anchor="w", padx=10, pady=(10, 0)
@@ -26,11 +24,10 @@ class App(tk.Tk):
         self.input_box.pack(fill="both", expand=True, padx=10, pady=5)
 
         buttons = tk.Frame(self)
-        buttons.pack(pady=10)
-        buttons.config(bg="gray22")
-        tk.Button(buttons, text="Open .eml...", highlightbackground= "black", command=self.open_file).pack(side="left", padx=5)
-        tk.Button(buttons, text="Analyze", highlightbackground= "black", command=self.run_analysis).pack(side="left", padx=5)
-        tk.Button(buttons, text="Clear", highlightbackground= "black", command=self.clear).pack(side="left", padx=5)
+        buttons.pack(pady=5)
+        tk.Button(buttons, text="Open .eml...", command=self.open_file).pack(side="left", padx=5)
+        tk.Button(buttons, text="Analyze", command=self.run_analysis).pack(side="left", padx=5)
+        tk.Button(buttons, text="Clear", command=self.clear).pack(side="left", padx=5)
 
         self.verdict_label = tk.Label(self, text="", font=("Helvetica", 18, "bold"))
         self.verdict_label.pack(pady=(10, 0))
@@ -52,6 +49,7 @@ class App(tk.Tk):
         if not raw:
             messagebox.showinfo("Nothing to analyze", "Paste an email first.")
             return
+
         if raw.lower().startswith(("from:", "received:", "return-path:", "subject:", "mime-version:")):
             data = extract_parts(message_from_string(raw, policy=policy.default))
         else:
